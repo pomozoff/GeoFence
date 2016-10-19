@@ -7,15 +7,31 @@
 //
 
 import UIKit
+import XCGLogger
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder,
+                   UIApplicationDelegate,
+                   CLLocationManagerDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        log.logAppDetails()
+        
+        locationManager.delegate = self
+        
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            log.debug("Location permissions do not determined yet")
+            locationManager.requestAlwaysAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .authorizedAlways {
+            log.debug("Location permissions allows to always monitor location")
+            regions = loadSavedRegions()
+        } else {
+            log.error("Location permissions denied")
+        }
+
         return true
     }
 
@@ -38,9 +54,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        stopMonitoring(forRegions: regions)
+    }
+    
+    // MARK: CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedAlways else {
+            log.error("User did not allow to monitor position always")
+            return
+        }
+        log.debug("User did grant to monitor position always")
+        regions = loadSavedRegions()
+    }
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        
+    }
+    
+    // MARK: Private
+    
+    private let saveKey = "SavedRegions"
+    private let locationManager: CLLocationManager = {
+        return CLLocationManager()
+    }()
+    
+    let log: XCGLogger = {
+        var documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        documentsUrl?.appendPathComponent("application.log")
+        
+        let log = XCGLogger.default
+        log.setup(level: .debug,
+                  showThreadName: true,
+                  showLevel: true,
+                  showFileNames: true,
+                  showLineNumbers: true,
+                  writeToFile: documentsUrl,
+                  fileLevel: .debug)
+        return log
+    }()
+    
+    private func loadSavedRegions() -> [CLCircularRegion] {
+        log.debug("Load regions")
+        let regions = UserDefaults.standard.object(forKey: saveKey) as? [CLCircularRegion] ?? [CLCircularRegion]()
+        log.debug("Did load regions: \(regions)")
+        
+        return regions
     }
 
+    private var regions = [CLCircularRegion]() {
+        willSet {
+            stopMonitoring(forRegions: regions)
+        }
+        didSet {
+            startMonitoring(forRegions: regions)
+        }
+    }
+    private func startMonitoring(forRegions regions: [CLCircularRegion]) {
+        regions.forEach { locationManager.startMonitoring(for: $0) }
+    }
+    private func stopMonitoring(forRegions regions: [CLCircularRegion]) {
+        regions.forEach { locationManager.stopMonitoring(for: $0) }
+    }
 
 }
-
