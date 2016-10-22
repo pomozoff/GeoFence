@@ -41,6 +41,7 @@ class AppDelegate: UIResponder,
         rootViewController.showsUserLocation = false
 
         locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             self.isGrantedNotificationAccess = granted
