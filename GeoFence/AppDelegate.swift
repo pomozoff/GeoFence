@@ -26,7 +26,7 @@ class AppDelegate: UIResponder,
     var window: UIWindow?
     var region: CLCircularRegion? = CLCircularRegion() {
         didSet {
-//            stopMonitoring(forRegion: oldValue)
+            stopMonitoring(forRegion: oldValue)
             saveRegion(region: region)
             startMonitoring(forRegion: region)
         }
@@ -184,7 +184,7 @@ class AppDelegate: UIResponder,
         }
         locationManager.startMonitoring(for: startRegion)
     }
-    private func stopMonitoringForRegion(region: CLCircularRegion?) {
+    private func stopMonitoring(forRegion region: CLCircularRegion?) {
         guard let stopRegion = region else {
             log.warning("Region is nil")
             return
