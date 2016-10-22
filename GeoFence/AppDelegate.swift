@@ -24,7 +24,7 @@ class AppDelegate: UIResponder,
     // MARK: Properties
 
     var window: UIWindow?
-    var region: CLCircularRegion? = CLCircularRegion() {
+    var region: CLCircularRegion? = nil {
         didSet {
             stopMonitoring(forRegion: oldValue)
             saveRegion(region: region)
