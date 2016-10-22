@@ -204,7 +204,7 @@ class AppDelegate: UIResponder,
             
             rootViewController.present(alertController, animated: true)
         } else {
-            guard !isGrantedNotificationAccess else {
+            guard isGrantedNotificationAccess else {
                 log.error("Failed to send a local notification - access denied")
                 return
             }
