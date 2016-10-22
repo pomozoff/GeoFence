@@ -13,7 +13,7 @@
 		26C61B091DB6AA9A0040ACC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26C61B081DB6AA9A0040ACC8 /* Assets.xcassets */; };
 		26C61B0C1DB6AA9A0040ACC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26C61B0A1DB6AA9A0040ACC8 /* LaunchScreen.storyboard */; };
 		26C61B151DB6B1130040ACC8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26C61B141DB6B1130040ACC8 /* MapKit.framework */; };
-		26EA7B251DB80ADC008EE2CC /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26EA7B241DB80ADC008EE2CC /* XCGLogger.framework */; };
+		26E003F21DBAB2D000AF4CAD /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E003F11DBAB2D000AF4CAD /* SwiftyBeaver.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		26C61B0B1DB6AA9A0040ACC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		26C61B0D1DB6AA9A0040ACC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26C61B141DB6B1130040ACC8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		26EA7B241DB80ADC008EE2CC /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
+		26E003F11DBAB2D000AF4CAD /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = Carthage/Build/iOS/SwiftyBeaver.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,7 +34,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C61B151DB6B1130040ACC8 /* MapKit.framework in Frameworks */,
-				26EA7B251DB80ADC008EE2CC /* XCGLogger.framework in Frameworks */,
+				26E003F21DBAB2D000AF4CAD /* SwiftyBeaver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +74,7 @@
 		26C61B131DB6B1130040ACC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				26EA7B241DB80ADC008EE2CC /* XCGLogger.framework */,
+				26E003F11DBAB2D000AF4CAD /* SwiftyBeaver.framework */,
 				26C61B141DB6B1130040ACC8 /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -90,6 +90,7 @@
 				26C61AFA1DB6AA960040ACC8 /* Sources */,
 				26C61AFB1DB6AA960040ACC8 /* Frameworks */,
 				26C61AFC1DB6AA960040ACC8 /* Resources */,
+				267F36E21DBAB6C900CFE5F2 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -155,6 +156,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		267F36E21DBAB6C900CFE5F2 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyBeaver.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		26C61AFA1DB6AA960040ACC8 /* Sources */ = {
